@@ -24,10 +24,11 @@
 
 ### Установка зависимостей
 
-> Установка express:
+> Установка express & body-parser:
 
 ```sh
 $ npm install --save express
+$ npm i --save body-parser
 ```
 
 > Установка path:
@@ -120,4 +121,21 @@ const userSchema = mongoose.Schema({
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;
+```
+
+Для того чтобы сохранить данные пользователя в БД необходимо использовать маршрут:POST и метод .save();
+```js
+app.post('/signup', async function(req, res){
+    const user = new User({
+        email: req.body.email,
+        password: req.body.password
+    });
+
+    try {
+        await user.save();
+        res.redirect('/');
+    } catch(error){
+        console.log(error);
+    }
+})
 ```
