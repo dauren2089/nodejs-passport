@@ -84,17 +84,16 @@ app.get('/signup', function(req, res) {
 // 		res.redirect(303, '/unauthorized');
 // 	};
 // }
-
-app.get('/unauthorized', function(req, res) {
-	res.status(403).render('unauthorized');
+app.get('/account', function(req, res){
+    // if(!req.user)
+    // return res.redirect(303, '/unauthorized');
+    res.render('account');
+    // res.render('account', { username: req.user.name });
 });
 
-// app.get('/account', allow('customer,employee'), function(req, res){
-// 	res.render('account', { username: req.user.name });
-// });
-app.get('/account', function(req, res){
-    res.render('account', { username: req.user.name });
-})
+app.get('/unauthorized', function(req, res) {
+	res.status(403).render('unauthorized', {name: req.body.name});
+});
 
 //обработчик ошибок 404
 app.use(function(req, res, next){
